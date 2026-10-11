@@ -5,30 +5,44 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="theme-color" content="#123b70">
-<title>RENDI+</title>
+<title>RENDI+ | Controle de ganhos</title>
 <style>
 *{box-sizing:border-box}
-body{margin:0;background:#edf3fa;color:#18304d;font-family:Arial,sans-serif}
-header{background:#123b70;color:white;padding:22px 18px;border-radius:0 0 22px 22px}
-h1{margin:0;font-size:28px}
-header p{margin:6px 0 0}
-main{padding:15px;max-width:600px;margin:auto}
-.card{background:white;border-radius:16px;padding:17px;margin-bottom:14px;box-shadow:0 3px 12px #102c5010}
-.label{font-size:13px;color:#64748b}
-.value{font-size:32px;font-weight:bold;margin:8px 0}
-.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-.metric{background:#f1f6fc;padding:12px;border-radius:12px}
-.metric strong{display:block;font-size:20px;margin-top:7px}
-button,input{font:inherit;padding:12px;border-radius:10px;border:1px solid #cbd5e1}
-button{background:#1765b1;color:white;border:0;font-weight:bold;cursor:pointer}
-button.secondary{background:#e5edf7;color:#18304d}
-input{width:100%;margin:7px 0 12px}
-.actions{display:flex;gap:8px;flex-wrap:wrap}
-h2{font-size:18px;margin-top:0}
-li{padding:8px 0;border-bottom:1px solid #e5eaf1}
-.progress{height:12px;background:#e5eaf1;border-radius:10px;overflow:hidden;margin:12px 0}
-#barra{height:100%;width:0;background:#20a36b}
-.small{font-size:13px;color:#64748b}
+body{margin:0;background:#edf3fa;color:#183153;font-family:Arial,sans-serif}
+header{background:linear-gradient(135deg,#2374c9,#123b70);color:white;padding:25px 20px 30px;border-radius:0 0 30px 30px}
+header h1{margin:0;font-size:32px}header p{margin:8px 0 0}
+main{max-width:700px;margin:auto;padding:16px}
+.card{background:white;border-radius:26px;padding:22px;margin-bottom:18px;box-shadow:0 7px 24px #1831530c}
+h2{font-size:22px;margin:0 0 18px}
+label{display:block;color:#64748b;font-size:14px;margin:14px 0 7px}
+input,select{width:100%;padding:15px;border:2px solid #dbe4ef;border-radius:17px;font-size:17px;background:white;color:#183153}
+button{border:0;border-radius:25px;padding:14px 17px;font-size:15px;font-weight:bold;cursor:pointer}
+button:active{transform:scale(.98)}
+.primary{background:#2374c9;color:white}
+.green{background:#16a36a;color:white}
+.orange{background:#f59e0b;color:#fff}
+.red{background:#e5484d;color:white}
+.soft{background:#eaf2fc;color:#205b9b}
+.buttons{display:flex;flex-wrap:wrap;gap:10px}
+.buttons button{flex:1;min-width:100px}
+.metrics{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.metric{background:#f1f6fc;border-radius:22px;padding:16px;min-width:0}
+.metric small{color:#64748b;font-size:13px}
+.metric strong{display:block;font-size:clamp(20px,5vw,27px);margin-top:8px;overflow-wrap:anywhere}
+.big{font-size:36px;font-weight:bold;margin:8px 0 18px}
+.progress{height:12px;background:#e1e9f3;border-radius:20px;overflow:hidden;margin:10px 0}
+.progress div{height:100%;background:#18a56b;width:0;transition:width .2s}
+.barrow{margin:16px 0}
+.barhead{display:flex;justify-content:space-between;gap:8px;font-size:14px;margin-bottom:7px}
+.bar{height:16px;background:#e6edf6;border-radius:20px;overflow:hidden}
+.fill{height:100%;background:#2374c9;border-radius:20px;min-width:0}
+.muted{color:#64748b;font-size:14px}
+.pill{display:inline-block;padding:7px 12px;border-radius:30px;background:#eaf8ef;color:#16804a;font-size:13px}
+.day{border:1px solid #e1e8f0;border-radius:17px;padding:14px;margin:10px 0}
+.daytop{display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap}
+.day button{padding:8px 12px;margin-top:8px}
+hr{border:0;border-top:1px solid #e7edf4;margin:18px 0}
+@media(max-width:380px){main{padding:10px}.card{padding:17px}.buttons button{min-width:85px;padding:12px 9px}.big{font-size:30px}}
 </style>
 </head>
 <body>
@@ -38,94 +52,253 @@ li{padding:8px 0;border-bottom:1px solid #e5eaf1}
 </header>
 <main>
 <section class="card">
-<div class="label">Faturamento da jornada</div>
-<div class="value" id="total">R$ 0,00</div>
-<div class="grid">
-<div class="metric"><span class="label">Por hora</span><strong id="hora">R$ 0,00</strong></div>
-<div class="metric"><span class="label">Por minuto</span><strong id="minuto">R$ 0,00</strong></div>
-<div class="metric"><span class="label">Por km</span><strong id="kmvalor">R$ 0,00</strong></div>
-<div class="metric"><span class="label">Distância</span><strong id="distancia">0 km</strong></div>
+<div class="metrics">
+<div class="metric"><small>Faturamento do dia</small><strong id="total">R$ 0,00</strong></div>
+<div class="metric"><small>Meta diária</small><strong id="metaDisplay">R$ 550,00</strong></div>
+</div>
+<label for="meta">Editar meta diária (R$)</label>
+<input id="meta" type="number" min="0" step=".01" value="550">
+<div class="barhead" style="margin-top:18px"><span>Progresso da meta</span><strong id="percent">0%</strong></div>
+<div class="progress"><div id="progress"></div></div>
+<p class="muted" id="faltam">Faltam R$ 550,00</p>
+<div class="metrics">
+<div class="metric"><small>Por hora trabalhada</small><strong id="hour">R$ 0,00</strong></div>
+<div class="metric"><small>Por minuto</small><strong id="minute">R$ 0,00</strong></div>
+<div class="metric"><small>Por km</small><strong id="kmrate">R$ 0,00</strong></div>
+<div class="metric"><small>Distância</small><strong id="distance">0 km</strong></div>
 </div>
 </section>
+
 <section class="card">
-<h2>Jornada</h2>
-<div id="status">Não iniciada</div>
-<p class="small" id="tempo">Tempo trabalhado: 00:00:00</p>
-<div class="actions">
-<button onclick="iniciar()">Iniciar</button>
-<button class="secondary" onclick="pausar()">Pausar</button>
-<button class="secondary" onclick="retomar()">Retomar</button>
-<button class="secondary" onclick="encerrar()">Encerrar</button>
+<h2>Jornada de trabalho</h2>
+<p id="status" class="pill">Jornada não iniciada</p>
+<div class="big" id="clock">00:00:00</div>
+<div class="buttons">
+<button class="green" id="start">▶ Iniciar</button>
+<button class="orange" id="pause">Ⅱ Pausar</button>
+<button class="primary" id="resume">▶ Retomar</button>
+<button class="red" id="finish">■ Encerrar</button>
 </div>
+<p class="muted" id="startedAt">Início: —</p>
 </section>
+
 <section class="card">
-<h2>Registrar corrida</h2>
-<label class="label" for="ganho">Valor recebido (R$)</label>
-<input id="ganho" type="number" min="0" step="0.01" placeholder="Ex.: 25,50">
-<label class="label" for="kmcorrida">Distância da corrida (km)</label>
-<input id="kmcorrida" type="number" min="0" step="0.1" placeholder="Ex.: 12">
-<button onclick="registrar()">Adicionar corrida</button>
+<h2>Registrar ganhos</h2>
+<p class="muted">Informe o total acumulado de hoje no aplicativo de corridas. O RENDI+ calcula somente a diferença, evitando duplicação.</p>
+<label for="earnings">Ganhos totais do dia até agora (R$)</label>
+<input id="earnings" type="number" min="0" step=".01" placeholder="Ex.: 135,50">
+<label for="kmInput">Quilômetros percorridos nesta jornada</label>
+<input id="kmInput" type="number" min="0" step=".1" placeholder="Ex.: 50">
+<div class="buttons" style="margin-top:12px">
+<button class="soft" id="odo">Usar hodômetro</button>
+<button class="soft" id="gps">Iniciar GPS</button>
+</div>
+<p id="gpsStatus" class="muted">Distância manual disponível. O GPS exige permissão e localização ativa.</p>
+<label for="expenses">Despesas acumuladas de hoje (R$)</label>
+<input id="expenses" type="number" min="0" step=".01" placeholder="Ex.: 25,00">
+<div class="buttons" style="margin-top:14px">
+<button class="primary" id="save">Atualizar registros</button>
+</div>
+<hr>
+<div class="metrics">
+<div class="metric"><small>Despesas</small><strong id="expenseDisplay">R$ 0,00</strong></div>
+<div class="metric"><small>Resultado após despesas</small><strong id="net">R$ 0,00</strong></div>
+</div>
+<p class="muted">O resultado desconta as despesas informadas; não inclui custos que você não registrou.</p>
 </section>
+
 <section class="card">
-<h2>Meta diária</h2>
-<label class="label" for="meta">Meta de faturamento (R$)</label>
-<input id="meta" type="number" min="0" value="550">
-<div class="progress"><div id="barra"></div></div>
-<div id="progresso">Faltam R$ 550,00</div>
+<h2>Projeção de ganhos</h2>
+<p class="muted">Estimativa baseada no ritmo médio por hora efetivamente trabalhada.</p>
+<div id="projections"></div>
 </section>
+
 <section class="card">
-<h2>Despesas</h2>
-<label class="label" for="despesa">Valor da despesa (R$)</label>
-<input id="despesa" type="number" min="0" step="0.01" placeholder="Ex.: 15,00">
-<label class="label" for="descricao">Descrição</label>
-<input id="descricao" type="text" placeholder="Ex.: recarga, café">
-<button onclick="registrarDespesa()">Adicionar despesa</button>
-<p>Despesas: <strong id="totalDespesas">R$ 0,00</strong></p>
-<p>Resultado após despesas: <strong id="liquido">R$ 0,00</strong></p>
+<h2>Histórico diário</h2>
+<p class="muted">Os dias encerrados ficam salvos neste navegador. Faça backup antes de limpar os dados do navegador ou trocar de celular.</p>
+<div class="buttons">
+<button class="soft" id="export">Exportar backup</button>
+<button class="soft" id="importBtn">Importar backup</button>
+<input id="importFile" type="file" accept="application/json" hidden>
+</div>
+<div id="history"></div>
 </section>
-<section class="card">
-<h2>Histórico da jornada</h2>
-<ul id="historico"></ul>
-<button class="secondary" onclick="limpar()">Limpar jornada</button>
-</section>
-<p class="small">Versão inicial de teste. Os dados ficam nesta página e ainda não têm cópia de segurança.</p>
 </main>
 <script>
-let total=0,km=0,despesas=0,segundos=0,estado="parada",marco=null,intervalo=null;
-const moeda=n=>n.toLocaleString("pt-BR",{style:"currency",currency:"BRL"});
-function atualizar(){
-document.getElementById("total").textContent=moeda(total);
-document.getElementById("distancia").textContent=km.toFixed(1)+" km";
-document.getElementById("hora").textContent=moeda(segundos?total/(segundos/3600):0);
-document.getElementById("minuto").textContent=moeda(segundos?total/(segundos/60):0);
-document.getElementById("kmvalor").textContent=moeda(km?total/km:0);
-document.getElementById("totalDespesas").textContent=moeda(despesas);
-document.getElementById("liquido").textContent=moeda(total-despesas);
-let meta=Math.max(0,Number(document.getElementById("meta").value)||0);
-let pct=meta?Math.min(100,total/meta*100):0;
-document.getElementById("barra").style.width=pct+"%";
-document.getElementById("progresso").textContent=meta?"Faltam "+moeda(Math.max(0,meta-total))+" para a meta ("+pct.toFixed(0)+"%)":"Defina uma meta";
-let h=Math.floor(segundos/3600),m=Math.floor(segundos%3600/60),s=segundos%60;
-document.getElementById("tempo").textContent="Tempo trabalhado: "+String(h).padStart(2,"0")+":"+String(m).padStart(2,"0")+":"+String(s).padStart(2,"0");
+const $=id=>document.getElementById(id);
+const money=n=>Number(n||0).toLocaleString('pt-BR',{style:'currency',currency:'BRL'});
+const num=id=>Math.max(0,Number($(id).value)||0);
+const today=()=>new Date().toLocaleDateString('en-CA');
+const timeText=ms=>{let s=Math.floor(ms/1000);return [Math.floor(s/3600),Math.floor(s%3600/60),s%60].map(n=>String(n).padStart(2,'0')).join(':')};
+const state={
+ day:today(), earnings:0, expenses:0, km:0, meta:550,
+ status:'idle', start:null, accumulated:0, pauseAt:null,
+ startOdo:null, gpsOn:false, gpsLast:null, gpsWatch:null,
+ history:[], sessions:[]
+};
+function load(){
+ try{
+ const x=JSON.parse(localStorage.getItem('rendiPlusData')||'{}');
+ if(x.history)state.history=x.history;
+ if(x.meta)state.meta=x.meta;
+ if(x.day===today()){
+ Object.assign(state,x);
+ }else{
+ state.day=today();state.earnings=0;state.expenses=0;state.km=0;
+ state.status='idle';state.start=null;state.accumulated=0;state.pauseAt=null;
+ }
+ }catch(e){}
+ $('meta').value=state.meta;
+ $('earnings').value=state.earnings||'';
+ $('expenses').value=state.expenses||'';
+ $('kmInput').value=state.km||'';
 }
-function iniciar(){if(estado==="rodando")return;estado="rodando";document.getElementById("status").textContent="Em andamento";if(!intervalo)intervalo=setInterval(()=>{if(estado==="rodando"){segundos++;atualizar()}},1000);atualizar()}
-function pausar(){if(estado!=="rodando")return;estado="pausada";document.getElementById("status").textContent="Pausada"}
-function retomar(){if(estado!=="pausada")return;estado="rodando";document.getElementById("status").textContent="Em andamento"}
-function encerrar(){estado="encerrada";document.getElementById("status").textContent="Encerrada";clearInterval(intervalo);intervalo=null}
-function registrar(){
-let g=Number(document.getElementById("ganho").value),d=Number(document.getElementById("kmcorrida").value);
-if(!Number.isFinite(g)||g<=0||!Number.isFinite(d)||d<0){alert("Informe o valor recebido e a distância.");return}
-total+=g;km+=d;adicionarLinha(moeda(g)+" — "+d.toFixed(1)+" km");document.getElementById("ganho").value="";document.getElementById("kmcorrida").value="";atualizar()
+function persist(){try{localStorage.setItem('rendiPlusData',JSON.stringify(state))}catch(e){}}
+function elapsed(){
+ let ms=state.accumulated||0;
+ if(state.status==='running'&&state.start)ms+=Date.now()-state.start;
+ return Math.max(0,ms);
 }
-function registrarDespesa(){
-let v=Number(document.getElementById("despesa").value),desc=document.getElementById("descricao").value.trim()||"Despesa";
-if(!Number.isFinite(v)||v<=0){alert("Informe o valor da despesa.");return}
-despesas+=v;adicionarLinha("Despesa: "+desc+" — "+moeda(v));document.getElementById("despesa").value="";document.getElementById("descricao").value="";atualizar()
+function update(){
+ const ms=elapsed(), hours=ms/3600000, minutes=ms/60000;
+ $('total').textContent=money(state.earnings);
+ $('metaDisplay').textContent=money(state.meta);
+ const p=state.meta?Math.min(100,state.earnings/state.meta*100):0;
+ $('percent').textContent=p.toLocaleString('pt-BR',{maximumFractionDigits:1})+'%';
+ $('progress').style.width=p+'%';
+ $('faltam').textContent=state.earnings>=state.meta?'Meta atingida!':`Faltam ${money(state.meta-state.earnings)}`;
+ $('hour').textContent=money(hours?state.earnings/hours:0);
+ $('minute').textContent=money(minutes?state.earnings/minutes:0);
+ $('kmrate').textContent=money(state.km?state.earnings/state.km:0);
+ $('distance').textContent=state.km.toLocaleString('pt-BR',{maximumFractionDigits:1})+' km';
+ $('clock').textContent=timeText(ms);
+ $('expenseDisplay').textContent=money(state.expenses);
+ $('net').textContent=money(state.earnings-state.expenses);
+ const statuses={idle:'Jornada não iniciada',running:'Jornada em andamento',paused:'Jornada pausada',finished:'Jornada encerrada'};
+ $('status').textContent=statuses[state.status]||statuses.idle;
+ $('startedAt').textContent='Início: '+(state.sessions?.length?state.sessions[state.sessions.length-1].startText:'—');
+ drawProjections(hours);drawHistory();
 }
-function adicionarLinha(txt){let li=document.createElement("li");li.textContent=txt;document.getElementById("historico").prepend(li)}
-function limpar(){if(!confirm("Apagar os registros desta jornada?"))return;encerrar();total=0;km=0;despesas=0;segundos=0;estado="parada";document.getElementById("status").textContent="Não iniciada";document.getElementById("historico").innerHTML="";atualizar()}
-document.getElementById("meta").addEventListener("input",atualizar);
-atualizar();
+function drawProjections(hours){
+ const root=$('projections');root.innerHTML='';
+ const rate=hours>0?state.earnings/hours:0;
+ const now=new Date(), current=now.getHours()+now.getMinutes()/60;
+ const targets=[16,18,20,22];
+ targets.forEach(t=>{
+ let total=state.earnings;
+ if(state.status==='running'&&current<t&&rate>0)total=state.earnings+Math.max(0,t-current)*rate;
+ const max=Math.max(state.meta,total,1);
+ const row=document.createElement('div');row.className='barrow';
+ const head=document.createElement('div');head.className='barhead';
+ const label=document.createElement('span');label.textContent='Até '+String(t).padStart(2,'0')+':00';
+ const value=document.createElement('strong');value.textContent=money(total);
+ head.append(label,value);
+ const bar=document.createElement('div');bar.className='bar';
+ const fill=document.createElement('div');fill.className='fill';fill.style.width=Math.min(100,total/max*100)+'%';
+ bar.append(fill);row.append(head,bar);
+ root.append(row);
+ });
+}
+function drawHistory(){
+ const root=$('history');root.innerHTML='';
+ if(!state.history.length){root.innerHTML='<p class="muted">Nenhum dia encerrado ainda.</p>';return}
+ [...state.history].reverse().slice(0,60).forEach(d=>{
+ const el=document.createElement('div');el.className='day';
+ const top=document.createElement('div');top.className='daytop';
+ const date=document.createElement('strong');date.textContent=d.day;
+ const gross=document.createElement('strong');gross.textContent=money(d.earnings);
+ top.append(date,gross);
+ const detail=document.createElement('p');detail.className='muted';
+ detail.textContent=`Despesas ${money(d.expenses)} · Líquido ${money(d.earnings-d.expenses)} · ${d.km} km · ${timeText(d.workMs)}`;
+ const b=document.createElement('button');b.className='soft';b.textContent='Ver detalhes';
+ b.onclick=()=>alert(`${d.day}\nFaturamento: ${money(d.earnings)}\nDespesas: ${money(d.expenses)}\nResultado: ${money(d.earnings-d.expenses)}\nDistância: ${d.km} km\nTempo: ${timeText(d.workMs)}`);
+ el.append(top,detail,b);root.append(el);
+ });
+}
+$('meta').addEventListener('change',()=>{state.meta=num('meta');persist();update()});
+$('start').onclick=()=>{
+ if(state.status==='running'){alert('A jornada já está em andamento.');return}
+ if(state.status==='finished'){alert('A jornada já foi encerrada. Recarregue a página para iniciar outra jornada.');return}
+ state.status='running';state.start=Date.now();
+ state.sessions=state.sessions||[];state.sessions.push({startText:new Date().toLocaleString('pt-BR')});
+ persist();update();
+};
+$('pause').onclick=()=>{
+ if(state.status!=='running')return;
+ state.accumulated=elapsed();state.status='paused';state.start=null;persist();update();
+};
+$('resume').onclick=()=>{
+ if(state.status!=='paused')return;
+ state.status='running';state.start=Date.now();persist();update();
+};
+$('finish').onclick=()=>{
+ if(state.status==='idle'){alert('Inicie a jornada primeiro.');return}
+ if(!confirm('Encerrar a jornada e salvar este dia no histórico?'))return;
+ state.accumulated=elapsed();state.start=null;state.status='finished';
+ state.history=state.history||[];
+ state.history=state.history.filter(d=>d.day!==state.day);
+ state.history.push({day:state.day,earnings:state.earnings,expenses:state.expenses,km:state.km,workMs:state.accumulated});
+ stopGPS();persist();update();
+};
+$('save').onclick=()=>{
+ const e=num('earnings'),x=num('expenses'),k=num('kmInput');
+ state.earnings=e;state.expenses=x;state.km=k;persist();update();
+};
+$('odo').onclick=()=>{
+ const v=prompt('Informe a leitura atual do hodômetro em km:');
+ if(v===null)return;
+ const n=Number(v.replace(',','.'));
+ if(!Number.isFinite(n)||n<0){alert('Leitura inválida.');return}
+ if(state.startOdo===null){
+ state.startOdo=n;alert('Hodômetro inicial registrado. Informe a leitura final ao terminar.');
+ }else{
+ const d=n-state.startOdo;
+ if(d<0){alert('A leitura final não pode ser menor que a inicial.');return}
+ $('kmInput').value=d.toFixed(1);state.startOdo=null;
+ }
+ persist();
+};
+function stopGPS(){
+ if(state.gpsWatch!==null&&navigator.geolocation)navigator.geolocation.clearWatch(state.gpsWatch);
+ state.gpsWatch=null;state.gpsOn=false;
+}
+$('gps').onclick=()=>{
+ if(!navigator.geolocation){alert('GPS não disponível neste navegador.');return}
+ if(state.gpsOn){stopGPS();$('gpsStatus').textContent='GPS pausado.';return}
+ state.gpsOn=true;state.gpsLast=null;
+ $('gpsStatus').textContent='Solicitando localização...';
+ state.gpsWatch=navigator.geolocation.watchPosition(pos=>{
+ const c=pos.coords;
+ if(state.gpsLast&&state.status==='running'){
+ const a=state.gpsLast;
+ const rad=x=>x*Math.PI/180;
+ const dlat=rad(c.latitude-a.lat),dlon=rad(c.longitude-a.lon);
+ const h=Math.sin(dlat/2)**2+Math.cos(rad(a.lat))*Math.cos(rad(c.latitude))*Math.sin(dlon/2)**2;
+ const meters=6371000*2*Math.atan2(Math.sqrt(h),Math.sqrt(1-h));
+ if(meters>5&&meters<500)state.km+=meters/1000;
+ }
+ state.gpsLast={lat:c.latitude,lon:c.longitude};
+ $('kmInput').value=state.km.toFixed(1);
+ $('gpsStatus').textContent='GPS ativo · precisão aproximada de '+Math.round(c.accuracy)+' m';
+ persist();update();
+ },err=>{$('gpsStatus').textContent='GPS indisponível: '+err.message;stopGPS()},
+ {enableHighAccuracy:true,maximumAge:2000,timeout:15000});
+};
+$('export').onclick=()=>{
+ const blob=new Blob([JSON.stringify(state,null,2)],{type:'application/json'});
+ const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='rendi-mais-backup.json';a.click();URL.revokeObjectURL(a.href);
+};
+$('importBtn').onclick=()=>$('importFile').click();
+$('importFile').onchange=async ev=>{
+ try{
+ const f=ev.target.files[0];if(!f)return;
+ const x=JSON.parse(await f.text());
+ if(!confirm('Importar o backup e substituir os dados locais?'))return;
+ Object.assign(state,x);persist();location.reload();
+ }catch(e){alert('Não foi possível importar este backup.')}
+};
+load();update();
+setInterval(()=>{if(state.status==='running')update()},1000);
 </script>
 </body>
 </html>
