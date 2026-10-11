@@ -222,3 +222,4 @@ function removeRide(i){if(!confirm("Excluir este registro do histórico da jorna
 function saveGoal(){let goal=num("goalInput");if(goal<=0)return alert("Informe uma meta maior que zero.");state.goal=goal;persist();render()}
 function useOdometer(){document.getElementById("odometerBox").classList.toggle("hidden")}
 function calculateOdometer(){let a=num("odoStart"),b=num("odoEnd");if(b<a)return alert("O hodômetro atual não pode ser menor que o inicial.");document.getElementById("kmInput").value=(b-a).toFix
+<!-- RENDI+ atualização -->
