@@ -1,546 +1,224 @@
-HTML
 
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="theme-color" content="#0759b5">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#0866c6">
 <title>RENDI+ | Seus ganhos, sob controle</title>
-
 <style>
-:root {
-  --blue:#0866c6;
-  --dark:#123d70;
-  --light:#edf5ff;
-  --green:#12ad70;
-  --orange:#ff9900;
-  --red:#ed334b;
-  --text:#102b50;
-  --muted:#73839a;
-  --white:#fff;
-}
-* {box-sizing:border-box}
-body {
-  margin:0;
-  background:linear-gradient(180deg,#e9f3ff,#f5f8fc);
-  color:var(--text);
-  font-family:Arial,Helvetica,sans-serif;
-}
-button,input,select {font:inherit}
-button {cursor:pointer}
-header {
-  background:linear-gradient(120deg,#0756b0,#003a80);
-  color:white;
-  padding:20px 18px 22px;
-  border-radius:0 0 30px 30px;
-}
-.header-line {
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  gap:12px;
-}
-.brand {font-size:32px;font-weight:800;letter-spacing:-1px}
-.subtitle {font-size:15px;margin-top:5px;opacity:.95}
-.header-icon {
-  width:43px;height:43px;border-radius:50%;
-  background:#ffffff25;border:0;color:white;font-size:20px;
-}
-main {max-width:760px;margin:auto;padding:12px}
-.card {
-  background:white;border-radius:23px;padding:18px;
-  margin:12px 0;box-shadow:0 7px 24px #1748750c;
-}
-h2 {font-size:20px;margin:0 0 15px}
-h3 {font-size:16px;margin:0 0 10px}
-.small {font-size:13px;color:var(--muted)}
-.muted {color:var(--muted)}
-.big {font-size:37px;font-weight:800;letter-spacing:-1px}
-.money {font-variant-numeric:tabular-nums}
-.summary-grid {
-  display:grid;grid-template-columns:1fr 1fr;gap:10px;
-}
-.metric {
-  background:#f0f6fd;border-radius:17px;padding:13px;
-  min-width:0;
-}
-.metric-label {font-size:13px;color:#62758f;margin-bottom:7px}
-.metric-value {font-size:21px;font-weight:750;overflow-wrap:anywhere}
-.progress-track {
-  background:#dce7f5;border-radius:20px;height:12px;overflow:hidden;
-}
-.progress-bar {
-  height:100%;width:0%;background:linear-gradient(90deg,#13bc78,#099c66);
-  border-radius:20px;transition:width .25s;
-}
-.progress-row {display:flex;justify-content:space-between;gap:10px;margin:15px 0 8px;font-size:14px}
-.stats-grid {display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-top:15px}
-.stat {
-  display:flex;align-items:center;gap:10px;
-  background:#f3f7fc;border-radius:16px;padding:12px;min-width:0;
-}
-.stat-icon {
-  width:40px;height:40px;border-radius:50%;display:grid;
-  place-items:center;background:#dcecff;font-size:21px;flex-shrink:0;
-}
-.stat-label {font-size:12px;color:#6b7e97}
-.stat-value {font-size:17px;font-weight:750;margin-top:4px}
-.section-head {display:flex;align-items:center;justify-content:space-between;gap:8px}
-.status {font-size:12px;color:#099b62;white-space:nowrap}
-.controls {display:grid;grid-template-columns:repeat(4,1fr);gap:9px}
-.control {
-  border:0;border-radius:50%;width:58px;height:58px;
-  color:white;font-size:24px;display:block;margin:0 auto 7px;
-  box-shadow:0 4px 10px #00000012;
-}
-.control-label {font-size:12px;font-weight:bold;text-align:center}
-.start {background:var(--green)}
-.pause {background:var(--orange)}
-.resume {background:#1681f7}
-.finish {background:var(--red)}
-.control:disabled {opacity:.4;cursor:not-allowed}
-label {display:block;font-size:13px;color:#687b95;margin-bottom:6px}
-input,select {
-  width:100%;min-width:0;border:1px solid #cbd7e6;
-  background:#fff;color:var(--text);border-radius:12px;
-  padding:12px;font-size:16px;outline-color:var(--blue);
-}
-.field {margin-bottom:13px;min-width:0}
-.btn {
-  border:0;border-radius:13px;padding:12px 15px;
-  background:var(--blue);color:white;font-weight:700;
-}
-.btn.full {width:100%}
-.btn.green {background:#129e6c}
-.btn.light {background:#e5f1ff;color:#0759b5}
-.btn.red {background:#fff0f2;color:#c51d38}
-.btnrow {display:flex;gap:8px;flex-wrap:wrap}
-.segment {
-  display:flex;background:#e8f0fa;border-radius:30px;padding:3px;
-}
-.segment button {
-  flex:1;border:0;border-radius:25px;padding:9px 5px;
-  background:transparent;color:var(--text);font-size:12px;
-}
-.segment button.active {background:var(--blue);color:white}
-.two-col {display:grid;grid-template-columns:1fr 1fr;gap:10px}
-.gain-layout {display:grid;grid-template-columns:1fr;gap:10px}
-.expense-layout {display:grid;grid-template-columns:1fr 1fr;gap:10px}
-.result-grid {display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
-.result {
-  padding:11px;border-radius:14px;background:#e8f8f0;min-width:0;
-}
-.result:nth-child(2) {background:#fff0f2}
-.result:nth-child(3) {background:#e7f3ff}
-.result-label {font-size:12px;color:#52677f}
-.result-value {font-size:17px;font-weight:800;margin-top:5px;overflow-wrap:anywhere}
-.projection-row {
-  display:grid;grid-template-columns:1fr 1fr;gap:8px;align-items:end;margin-bottom:10px;
-}
-.projection-result {background:#e8f3ff;border-radius:12px;padding:12px;font-size:13px}
-.table-wrap {overflow-x:auto}
-table {border-collapse:collapse;width:100%;font-size:12px}
-th,td {padding:10px 6px;text-align:left;border-bottom:1px solid #e7edf5;white-space:nowrap}
-th {color:#708098;font-weight:500}
-.empty {font-size:13px;color:#8592a5;padding:8px 0}
-footer {text-align:center;color:#8090a5;font-size:12px;padding:18px}
-.hidden {display:none!important}
-@media(min-width:600px) {
-  main {padding:18px}
-  .stats-grid {grid-template-columns:repeat(4,1fr)}
-  .gain-layout {grid-template-columns:1fr 1fr}
-}
-@media(max-width:380px) {
-  .big {font-size:31px}
-  .metric-value {font-size:18px}
-  .control {width:51px;height:51px}
-  .card {padding:15px}
-  .result-grid {grid-template-columns:1fr}
-}
+:root{--blue:#0874df;--dark:#063d80;--green:#10ae70;--orange:#ff9800;--red:#ed334b;--ink:#10264f;--muted:#687991;--bg:#edf5ff}
+*{box-sizing:border-box}
+body{margin:0;background:linear-gradient(#e8f3ff,#f5f8fc);font-family:Arial,Helvetica,sans-serif;color:var(--ink)}
+button,input,select{font:inherit}
+button{cursor:pointer}
+header{background:linear-gradient(115deg,#0875e6,#003b80);color:white;padding:15px 20px;border-radius:0 0 28px 28px;display:flex;justify-content:space-between;align-items:center;gap:12px}
+.brand{font-size:32px;font-weight:800;letter-spacing:-1px}
+.subtitle{font-size:14px;margin-top:3px}
+.head-actions{display:flex;gap:8px}
+.head-icon{border:0;background:#ffffff24;color:white;border-radius:50%;width:48px;height:48px;font-size:23px}
+main{max-width:1000px;margin:auto;padding:10px}
+.card{background:white;border-radius:22px;padding:15px;margin:10px 0;box-shadow:0 5px 18px #173b660b}
+h2{font-size:19px;margin:0 0 12px}
+h3{font-size:15px;margin:0 0 8px}
+.small{font-size:12px;color:var(--muted)}
+.muted{color:var(--muted)}
+.summary{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.summary-box{background:#f0f6fd;border-radius:17px;padding:12px}
+.summary-label{font-size:13px}
+.big{font-size:clamp(25px,6vw,39px);font-weight:800;letter-spacing:-1px;margin:5px 0}
+.goal-value{color:#079453}
+.money{font-variant-numeric:tabular-nums}
+.progress-row{display:flex;justify-content:space-between;gap:8px;font-size:13px;margin:12px 0 7px}
+.track{height:12px;border-radius:20px;background:#dce7f5;overflow:hidden}
+.bar{height:100%;width:0;background:linear-gradient(90deg,#25c980,#079b63);border-radius:20px;transition:width .2s}
+.stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;margin-top:12px}
+.stat{display:flex;align-items:center;gap:8px;background:#f2f7fd;border-radius:17px;padding:10px;min-width:0}
+.stat-icon{width:42px;height:42px;flex-shrink:0;display:grid;place-items:center;border-radius:50%;background:#dcecff;color:#0874df;font-size:22px}
+.stat:nth-child(2) .stat-icon{background:#eee2ff;color:#8116db}
+.stat:nth-child(3) .stat-icon{background:#d8f8e8;color:#099c67}
+.stat:nth-child(4) .stat-icon{background:#fff0d9;color:#e98900}
+.stat-label{font-size:12px;color:#52647d}
+.stat-value{font-size:clamp(13px,2.6vw,19px);font-weight:800;margin-top:4px;overflow-wrap:anywhere}
+.section-head{display:flex;align-items:center;justify-content:space-between;gap:8px}
+.status{font-size:12px;color:#078653}
+.controls{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:5px}
+.control-button{border:0;background:transparent;color:var(--ink);font-weight:bold;padding:0 2px}
+.circle{width:clamp(52px,14vw,82px);height:clamp(52px,14vw,82px);border-radius:50%;display:grid;place-items:center;margin:0 auto 7px;color:white;font-size:clamp(22px,6vw,32px);box-shadow:0 5px 12px #00000012}
+.start{background:#0bb779}.pause{background:#ff9900}.resume{background:#1681f7}.finish{background:#ed334b}
+label{display:block;font-size:12px;color:#60728b;margin-bottom:5px}
+input,select{width:100%;min-width:0;padding:11px;border:1px solid #c8d4e3;border-radius:12px;background:white;color:var(--ink);font-size:15px}
+.field{min-width:0}
+.btn{border:0;border-radius:13px;padding:11px 13px;background:var(--blue);color:white;font-weight:bold}
+.full{width:100%}
+.light{background:#e5f1ff;color:#0866c6}
+.green{background:#149e6b;color:white}
+.red-light{background:#fff0f2;color:#c51d38}
+.btnrow{display:flex;gap:8px;flex-wrap:wrap}
+.segment{display:flex;gap:3px;background:#e8f0fa;padding:3px;border-radius:30px}
+.segment button{flex:1;border:0;border-radius:25px;padding:9px 4px;background:transparent;color:var(--ink);font-size:12px}
+.segment button.active{background:var(--blue);color:white}
+.gain-head{display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap}
+.gain-row{display:grid;grid-template-columns:1fr;gap:10px;margin-top:10px}
+.km-tools{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+.expenses-row{display:grid;grid-template-columns:1fr 1fr auto;align-items:end;gap:8px}
+.result-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+.result{padding:11px;border-radius:15px;background:#e2f7ed;min-width:0}
+.result:nth-child(2){background:#fff0f2}
+.result:nth-child(3){background:#e5f2ff}
+.result-label{font-size:12px}
+.result-value{font-size:clamp(14px,3vw,20px);font-weight:800;margin-top:5px;overflow-wrap:anywhere}
+.projections{display:grid;grid-template-columns:1fr 1fr;gap:10px;align-items:center}
+.projection-row{display:grid;grid-template-columns:1fr 1fr;gap:7px;align-items:end;margin-bottom:8px}
+.projection-result{background:#e6f2ff;border-radius:12px;padding:10px;font-size:12px}
+.table-wrap{overflow-x:auto}
+table{border-collapse:collapse;width:100%;font-size:12px}
+th,td{padding:9px 5px;text-align:left;border-bottom:1px solid #e7edf5;white-space:nowrap}
+th{color:#6e7e93;font-weight:500}
+.empty{font-size:13px;color:#8592a5;padding:8px 0}
+.hidden{display:none!important}
+footer{text-align:center;color:#8090a5;font-size:12px;padding:16px}
+@media(min-width:650px){main{padding:16px}.gain-row{grid-template-columns:1fr 1fr}.card{padding:20px}}
+@media(max-width:430px){header{padding:13px}.brand{font-size:27px}.head-icon{width:39px;height:39px;font-size:19px}.stat{display:block;padding:8px 5px;text-align:center}.stat-icon{margin:0 auto 5px;width:35px;height:35px}.stats{gap:5px}.expenses-row{grid-template-columns:1fr 1fr}.expenses-row .btn{grid-column:1/-1}.result-grid{gap:5px}.result{padding:8px}.controls{gap:1px}}
 </style>
 </head>
-
 <body>
 <header>
-  <div class="header-line">
-    <div>
-      <div class="brand">RENDI+</div>
-      <div class="subtitle">Seus ganhos, sob controle.</div>
-    </div>
-    <button class="header-icon" onclick="scrollToSection('resumo')" aria-label="Resumo">▥</button>
-    <button class="header-icon" onclick="scrollToSection('projecoes')" aria-label="Projeções">▦</button>
-    <button class="header-icon" onclick="scrollToSection('backup')" aria-label="Backup">⚙</button>
-  </div>
+ <div><div class="brand">RENDI+</div><div class="subtitle">Seus ganhos, sob controle.</div></div>
+ <div class="head-actions">
+  <button class="head-icon" onclick="go('resumo')" aria-label="Resumo">▥</button>
+  <button class="head-icon" onclick="go('historico')" aria-label="Histórico">▦</button>
+  <button class="head-icon" onclick="go('backup')" aria-label="Configurações">⚙</button>
+ </div>
 </header>
-
 <main>
-  <section class="card" id="resumo">
-    <div class="summary-grid">
-      <div>
-        <div class="muted" style="font-size:13px">Faturamento da jornada</div>
-        <div class="big money" id="gross">R$ 0,00</div>
-        <div class="small">Acumulado do dia</div>
-      </div>
-      <div class="metric">
-        <div class="metric-label">Meta diária</div>
-        <div class="metric-value money" id="goalDisplay">R$ 550,00</div>
-        <div class="small" id="remaining">Faltam R$ 550,00</div>
-      </div>
-    </div>
-
-    <div class="progress-row">
-      <span>Progresso da meta</span><strong id="progressText">0%</strong>
-    </div>
-    <div class="progress-track"><div class="progress-bar" id="progressBar"></div></div>
-
-    <div class="stats-grid">
-      <div class="stat"><div class="stat-icon">◷</div><div><div class="stat-label">Por hora</div><div class="stat-value money" id="hourRate">R$ 0,00</div></div></div>
-      <div class="stat"><div class="stat-icon">⏱</div><div><div class="stat-label">Por minuto</div><div class="stat-value money" id="minuteRate">R$ 0,00</div></div></div>
-      <div class="stat"><div class="stat-icon">▥</div><div><div class="stat-label">Por km</div><div class="stat-value money" id="kmRate">R$ 0,00</div></div></div>
-      <div class="stat"><div class="stat-icon">⌁</div><div><div class="stat-label">Distância</div><div class="stat-value" id="distanceDisplay">0 km</div></div></div>
-    </div>
-  </section>
-
-  <section class="card">
-    <div class="section-head">
-      <h2>Jornada de trabalho</h2>
-      <span class="status" id="status">● Não iniciada</span>
-    </div>
-    <div class="muted" id="timer" style="font-size:17px;margin-bottom:15px">00:00:00</div>
-    <div class="controls">
-      <button onclick="startJourney()" aria-label="Iniciar"><div class="control start">▶</div><div class="control-label">Iniciar</div></button>
-      <button onclick="pauseJourney()" aria-label="Pausar"><div class="control pause">Ⅱ</div><div class="control-label">Pausar</div></button>
-      <button onclick="resumeJourney()" aria-label="Retomar"><div class="control resume">▶</div><div class="control-label">Retomar</div></button>
-      <button onclick="finishJourney()" aria-label="Encerrar"><div class="control finish">■</div><div class="control-label">Encerrar</div></button>
-    </div>
-  </section>
-
-  <section class="card">
-    <h2>Registrar ganhos</h2>
-    <div class="segment" style="margin-bottom:14px">
-      <button id="modeTotal" class="active" onclick="setGainMode('total')">Valor acumulado</button>
-      <button id="modeRide" onclick="setGainMode('ride')">Valor da corrida</button>
-    </div>
-    <div class="field">
-      <label id="gainLabel">Ganhos total do dia até o momento (R$)</label>
-      <input id="gainInput" type="number" min="0" step="0.01" placeholder="Ex.: 135,50" inputmode="decimal">
-    </div>
-    <div class="field">
-      <label>Quilômetros percorridos (total do dia)</label>
-      <input id="kmInput" type="number" min="0" step="0.1" placeholder="Ex.: 50" inputmode="decimal">
-    </div>
-    <div class="btnrow" style="margin-bottom:12px">
-      <button class="btn light" onclick="useOdometer()">Usar hodômetro</button>
-      <button class="btn light" onclick="gpsNotice()">◎ GPS (futuro)</button>
-    </div>
-    <div id="odometerBox" class="field hidden">
-      <label>Hodômetro inicial</label>
-      <input id="odoStart" type="number" min="0" placeholder="Ex.: 14500">
-      <label style="margin-top:10px">Hodômetro atual</label>
-      <input id="odoEnd" type="number" min="0" placeholder="Ex.: 14550">
-      <button class="btn light" style="margin-top:8px" onclick="calculateOdometer()">Calcular distância</button>
-    </div>
-    <button class="btn full" onclick="saveGain()">＋ Atualizar ganhos</button>
-  </section>
-
-  <section class="card">
-    <h2>Despesas do dia</h2>
-    <div class="expense-layout">
-      <div class="field">
-        <label>Valor da despesa (R$)</label>
-        <input id="expenseInput" type="number" min="0" step="0.01" placeholder="Ex.: 25,00" inputmode="decimal">
-      </div>
-      <div class="field">
-        <label>Tipo de despesa</label>
-        <select id="expenseType">
-          <option value="">Selecione...</option>
-          <option>Recarga</option><option>Alimentação</option>
-          <option>Café</option><option>Pedágio</option>
-          <option>Lavagem</option><option>Manutenção</option><option>Outros</option>
-        </select>
-      </div>
-    </div>
-    <button class="btn green full" onclick="addExpense()">＋ Adicionar despesa</button>
-    <div id="expenseList" class="empty"></div>
-  </section>
-
-  <section class="card">
-    <h2>Resultado após despesas</h2>
-    <div class="result-grid">
-      <div class="result"><div class="result-label">Faturamento bruto</div><div class="result-value money" id="resultGross">R$ 0,00</div></div>
-      <div class="result"><div class="result-label">Despesas</div><div class="result-value money" id="resultExpenses">R$ 0,00</div></div>
-      <div class="result"><div class="result-label">Resultado líquido</div><div class="result-value money" id="resultNet">R$ 0,00</div></div>
-    </div>
-  </section>
-
-  <section class="card" id="projecoes">
-    <h2>Projeções de faturamento</h2>
-    <div class="projection-row">
-      <div class="field" style="margin:0">
-        <label>Projetar até</label><input type="time" id="time1" value="16:00">
-      </div>
-      <div class="projection-result" id="projection1">Estimativa: R$ 0,00</div>
-    </div>
-    <div class="projection-row">
-      <div class="field" style="margin:0">
-        <label>Projetar até</label><input type="time" id="time2" value="18:00">
-      </div>
-      <div class="projection-result" id="projection2">Estimativa: R$ 0,00</div>
-    </div>
-    <button class="btn full" onclick="calculateProjections()">▥ Calcular projeções</button>
-    <p class="small">Estimativas baseadas na média por hora da jornada ativa. São projeções, não garantias de ganhos.</p>
-  </section>
-
-  <section class="card">
-    <h2>Histórico desta jornada</h2>
-    <div id="journeyHistory" class="empty">Nenhum registro nesta jornada.</div>
-  </section>
-
-  <section class="card">
-    <h2>Meta diária</h2>
-    <div class="field">
-      <label>Sua meta em reais</label>
-      <input id="goalInput" type="number" min="1" step="1" value="550" inputmode="decimal">
-    </div>
-    <button class="btn light full" onclick="saveGoal()">Salvar meta diária</button>
-  </section>
-
-  <section class="card" id="backup">
-    <h2>Backup e histórico de dias anteriores</h2>
-    <div class="btnrow">
-      <button class="btn light" onclick="exportBackup()">↓ Exportar backup</button>
-      <button class="btn light" onclick="document.getElementById('importFile').click()">↑ Importar backup</button>
-      <button class="btn light" onclick="showDayHistory()">▦ Ver histórico de dias</button>
-    </div>
-    <input class="hidden" id="importFile" type="file" accept=".json,application/json" onchange="importBackup(event)">
-    <div id="dayHistory" class="empty"></div>
-  </section>
+<section class="card" id="resumo">
+ <div class="summary">
+  <div class="summary-box"><div class="summary-label">Faturamento da jornada</div><div class="big money" id="gross">R$ 0,00</div><div class="muted" style="font-size:13px">Acumulado do dia</div></div>
+  <div class="summary-box"><div class="summary-label">Meta diária</div><div class="big goal-value money" id="goalDisplay">R$ 550,00</div><div class="muted" id="remaining" style="font-size:13px">Faltam R$ 550,00</div></div>
+ </div>
+ <div class="progress-row"><span>Progresso da meta</span><strong id="progressText">0%</strong></div>
+ <div class="track"><div class="bar" id="progressBar"></div></div>
+ <div class="stats">
+  <div class="stat"><div class="stat-icon">◷</div><div><div class="stat-label">Por hora</div><div class="stat-value money" id="hourRate">R$ 0,00</div></div></div>
+  <div class="stat"><div class="stat-icon">⏱</div><div><div class="stat-label">Por minuto</div><div class="stat-value money" id="minuteRate">R$ 0,00</div></div></div>
+  <div class="stat"><div class="stat-icon">▥</div><div><div class="stat-label">Por km</div><div class="stat-value money" id="kmRate">R$ 0,00</div></div></div>
+  <div class="stat"><div class="stat-icon">♧</div><div><div class="stat-label">Distância</div><div class="stat-value" id="distanceDisplay">0 km</div></div></div>
+ </div>
+</section>
+<section class="card">
+ <div class="section-head"><h2>Jornada de trabalho</h2><span class="status" id="status">● Não iniciada</span></div>
+ <div id="timer" style="font-size:18px;margin-bottom:12px">00:00:00</div>
+ <div class="controls">
+  <button class="control-button" onclick="startJourney()"><span class="circle start">▶</span>Iniciar</button>
+  <button class="control-button" onclick="pauseJourney()"><span class="circle pause">Ⅱ</span>Pausar</button>
+  <button class="control-button" onclick="resumeJourney()"><span class="circle resume">▶</span>Retomar</button>
+  <button class="control-button" onclick="finishJourney()"><span class="circle finish">■</span>Encerrar</button>
+ </div>
+</section>
+<section class="card">
+ <div class="gain-head"><h2 style="margin:0">Registrar ganhos</h2>
+  <div class="segment"><button id="modeTotal" class="active" onclick="setGainMode('total')">Valor acumulado</button><button id="modeRide" onclick="setGainMode('ride')">Valor da corrida</button></div>
+ </div>
+ <div class="gain-row">
+  <div class="field"><label id="gainLabel">Ganhos totais do dia até o momento (R$)</label><input id="gainInput" type="number" min="0" step=".01" placeholder="Ex.: 135,50" inputmode="decimal"></div>
+  <div class="field"><label>Quilômetros percorridos (total do dia)</label><input id="kmInput" type="number" min="0" step=".1" placeholder="Ex.: 50" inputmode="decimal"></div>
+ </div>
+ <div class="gain-row" style="margin-top:0">
+  <div class="btnrow"><button class="btn light" onclick="useOdometer()">◉ Usar hodômetro</button><button class="btn light" onclick="gpsNotice()">◎ GPS (futuro)</button></div>
+  <div id="odometerBox" class="field hidden"><div class="km-tools"><div><label>Hodômetro inicial</label><input id="odoStart" type="number"></div><div><label>Hodômetro atual</label><input id="odoEnd" type="number"></div></div><button class="btn light" style="margin-top:7px" onclick="calculateOdometer()">Calcular distância</button></div>
+ </div>
+ <button class="btn full" style="margin-top:12px" onclick="saveGain()">⊕ &nbsp;Atualizar ganhos</button>
+</section>
+<section class="card">
+ <h2>▦ &nbsp;Despesas do dia</h2>
+ <div class="expenses-row">
+  <div><label>Valor da despesa (R$)</label><input id="expenseInput" type="number" min="0" step=".01" placeholder="Ex.: 25,00"></div>
+  <div><label>Tipo de despesa</label><select id="expenseType"><option value="">Selecione...</option><option>Recarga</option><option>Alimentação</option><option>Café</option><option>Pedágio</option><option>Lavagem</option><option>Manutenção</option><option>Outros</option></select></div>
+  <button class="btn green" onclick="addExpense()">＋ Adicionar despesa</button>
+ </div>
+ <div id="expenseList" class="empty">Nenhuma despesa registrada.</div>
+</section>
+<section class="card">
+ <h2>♧ &nbsp;Resultado após despesas</h2>
+ <div class="result-grid">
+  <div class="result"><div class="result-label">Faturamento bruto</div><div class="result-value money" id="resultGross">R$ 0,00</div></div>
+  <div class="result"><div class="result-label">Despesas</div><div class="result-value money" id="resultExpenses">R$ 0,00</div></div>
+  <div class="result"><div class="result-label">Resultado líquido</div><div class="result-value money" id="resultNet">R$ 0,00</div></div>
+ </div>
+</section>
+<section class="card" id="projecoes">
+ <h2>▥ &nbsp;Projeções de faturamento</h2>
+ <div class="projections"><div>
+  <div class="projection-row"><div><label>Projetar até</label><input type="time" id="time1" value="16:00"></div><div class="projection-result" id="projection1">Estimativa: R$ 0,00</div></div>
+  <div class="projection-row"><div><label>Projetar até</label><input type="time" id="time2" value="18:00"></div><div class="projection-result" id="projection2">Estimativa: R$ 0,00</div></div>
+ </div><button class="btn full" style="min-height:70px" onclick="calculateProjections(true)">▦ Calcular projeções</button></div>
+ <p class="small">Estimativas com base na média por hora e no tempo restante. Não são garantias de ganhos.</p>
+</section>
+<section class="card" id="historico">
+ <h2>▦ &nbsp;Histórico desta jornada</h2><div id="journeyHistory" class="empty">Nenhum registro nesta jornada.</div>
+</section>
+<section class="card">
+ <h2>Meta diária</h2><div class="field"><label>Sua meta em reais</label><input id="goalInput" type="number" min="1" value="550"></div>
+ <button class="btn light full" onclick="saveGoal()">Salvar meta diária</button>
+</section>
+<section class="card" id="backup">
+ <h2>▦ &nbsp;Backup e histórico de dias anteriores</h2>
+ <div class="btnrow"><button class="btn light" onclick="exportBackup()">↓ Exportar backup</button><button class="btn light" onclick="document.getElementById('importFile').click()">↑ Importar backup</button><button class="btn light" onclick="showDayHistory()">▦ Ver histórico de dias</button></div>
+ <input class="hidden" id="importFile" type="file" accept=".json,application/json" onchange="importBackup(event)">
+ <div id="dayHistory" class="empty"></div>
+</section>
 </main>
-
 <footer>RENDI+ · Seus ganhos, sob controle.</footer>
-
 <script>
-const KEY = "rendi_plus_v1";
-const money = n => (Number(n)||0).toLocaleString("pt-BR",{style:"currency",currency:"BRL"});
-const num = id => Math.max(0,Number(document.getElementById(id).value)||0);
-const today = () => {
-  const d = new Date();
-  return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0");
-};
-const timeNow = () => new Date().toLocaleTimeString("pt-BR",{hour:"2-digit",minute:"2-digit"});
-const newDay = () => ({
-  day:today(), gross:0, km:0, expenses:[], rides:[], status:"stopped",
-  accumulated:0, startedAt:null, elapsed:0, lastTime:null
-});
-let state, history = [], gainMode = "total";
-
-function loadData() {
-  try {
-    const saved = JSON.parse(localStorage.getItem(KEY)||"null");
-    if(saved && saved.state) {
-      state=saved.state;
-      history=Array.isArray(saved.history)?saved.history:[];
-      if(state.day!==today()) {
-        if(state.gross || state.elapsed) history.unshift(snapshotDay(state));
-        state=newDay();
-      }
-    } else state=newDay();
-  } catch(e) {state=newDay();history=[];}
-  if(!state.expenses) state.expenses=[];
-  if(!state.rides) state.rides=[];
-  if(!Number.isFinite(state.elapsed)) state.elapsed=0;
-  if(state.status==="running") {
-    state.startedAt=Date.now();
-  }
-  document.getElementById("goalInput").value=state.goal||550;
-  render();
+const KEY="rendi_plus_v1";
+const money=n=>(Number(n)||0).toLocaleString("pt-BR",{style:"currency",currency:"BRL"});
+const num=id=>Math.max(0,Number(document.getElementById(id).value)||0);
+const today=()=>{let d=new Date();return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0")};
+const timeNow=()=>new Date().toLocaleTimeString("pt-BR",{hour:"2-digit",minute:"2-digit"});
+const newDay=()=>({day:today(),gross:0,km:0,expenses:[],rides:[],status:"stopped",startedAt:null,elapsed:0,goal:550});
+let state,history=[],gainMode="total";
+function persist(){try{localStorage.setItem(KEY,JSON.stringify({state,history:history.slice(0,90)}))}catch(e){}}
+function elapsedSeconds(){let s=state.elapsed||0;if(state.status==="running"&&state.startedAt)s+=(Date.now()-state.startedAt)/1000;return Math.max(0,Math.floor(s))}
+function formatDuration(s){let h=Math.floor(s/3600),m=Math.floor(s%3600/60),sec=s%60;return [h,m,sec].map(v=>String(v).padStart(2,"0")).join(":")}
+function activeHours(){return elapsedSeconds()/3600}
+function escapeHTML(s){return String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]))}
+function snapshotDay(s){return {day:s.day||today(),gross:s.gross||0,km:s.km||0,expenses:(s.expenses||[]).reduce((a,e)=>a+e.value,0),elapsed:s===state?elapsedSeconds():(s.elapsed||0),rides:(s.rides||[]).length}}
+function render(){
+ const gross=state.gross||0,km=state.km||0,goal=state.goal||550,h=activeHours(),exp=state.expenses.reduce((a,e)=>a+e.value,0);
+ document.getElementById("gross").textContent=money(gross);document.getElementById("goalDisplay").textContent=money(goal);
+ document.getElementById("remaining").textContent=gross>=goal?"Meta atingida!":"Faltam "+money(goal-gross);
+ let pct=goal>0?Math.min(100,gross/goal*100):0;
+ document.getElementById("progressText").textContent=pct.toLocaleString("pt-BR",{maximumFractionDigits:1})+"%";document.getElementById("progressBar").style.width=pct+"%";
+ document.getElementById("hourRate").textContent=money(h?gross/h:0);document.getElementById("minuteRate").textContent=money(h?gross/(h*60):0);document.getElementById("kmRate").textContent=money(km?gross/km:0);
+ document.getElementById("distanceDisplay").textContent=km.toLocaleString("pt-BR",{maximumFractionDigits:1})+" km";document.getElementById("timer").textContent=formatDuration(elapsedSeconds());
+ document.getElementById("status").textContent=({running:"● Jornada em andamento",paused:"● Jornada pausada",stopped:"● Não iniciada",finished:"● Jornada encerrada"})[state.status]||"● Não iniciada";
+ document.getElementById("resultGross").textContent=money(gross);document.getElementById("resultExpenses").textContent=money(exp);document.getElementById("resultNet").textContent=money(gross-exp);
+ document.getElementById("expenseList").innerHTML=state.expenses.length?state.expenses.map((e,i)=>`<div class="btnrow" style="justify-content:space-between;padding:7px 0;border-bottom:1px solid #edf1f7"><span>${escapeHTML(e.type)} · ${money(e.value)}</span><button class="btn red-light" onclick="removeExpense(${i})">Excluir</button></div>`).join(""):"Nenhuma despesa registrada.";
+ document.getElementById("journeyHistory").innerHTML=state.rides.length?`<div class="table-wrap"><table><thead><tr><th>Horário</th><th>Valor</th><th>Km</th><th>Tipo</th><th></th></tr></thead><tbody>${state.rides.map((r,i)=>`<tr><td>${escapeHTML(r.time)}</td><td>${money(r.value)}</td><td>${Number(r.km||0).toLocaleString("pt-BR")}</td><td>${escapeHTML(r.type)}</td><td><button class="btn red-light" onclick="removeRide(${i})">🗑</button></td></tr>`).join("")}</tbody></table></div>`:"Nenhum registro nesta jornada.";
+ calculateProjections(false);persist();
 }
-function persist() {
-  localStorage.setItem(KEY,JSON.stringify({state,history:history.slice(0,90)}));
+function loadData(){
+ try{let d=JSON.parse(localStorage.getItem(KEY)||"null");if(d&&d.state){state=d.state;history=Array.isArray(d.history)?d.history:[];if(state.day!==today()){if(state.gross||state.elapsed)history.unshift(snapshotDay(state));state=newDay()}}else state=newDay()}catch(e){state=newDay();history=[]}
+ state.expenses=state.expenses||[];state.rides=state.rides||[];state.elapsed=Number(state.elapsed)||0;state.goal=state.goal||550;
+ if(state.status==="running"){state.status="paused";state.startedAt=null}
+ document.getElementById("goalInput").value=state.goal;render();showDayHistory();
 }
-function elapsedSeconds() {
-  let s=state.elapsed||0;
-  if(state.status==="running" && state.startedAt) s+=(Date.now()-state.startedAt)/1000;
-  return Math.max(0,Math.floor(s));
+function startJourney(){if(state.status==="running")return alert("A jornada já está em andamento.");if(state.status==="finished"){if(!confirm("Iniciar uma nova jornada? Os dados atuais serão guardados."))return;history.unshift(snapshotDay(state));history=history.slice(0,90);state=newDay()}state.status="running";state.startedAt=Date.now();persist();render()}
+function pauseJourney(){if(state.status!=="running")return alert("A jornada não está em andamento.");state.elapsed=elapsedSeconds();state.startedAt=null;state.status="paused";persist();render()}
+function resumeJourney(){if(state.status!=="paused")return alert("A jornada não está pausada.");state.startedAt=Date.now();state.status="running";persist();render()}
+function finishJourney(){if(state.status==="finished")return alert("Jornada já encerrada.");if(!confirm("Encerrar e guardar esta jornada no histórico?"))return;state.elapsed=elapsedSeconds();state.startedAt=null;state.status="finished";history.unshift(snapshotDay(state));history=history.slice(0,90);persist();render();showDayHistory()}
+function setGainMode(mode){gainMode=mode;document.getElementById("modeTotal").classList.toggle("active",mode==="total");document.getElementById("modeRide").classList.toggle("active",mode==="ride");document.getElementById("gainLabel").textContent=mode==="total"?"Ganhos totais do dia até o momento (R$)":"Valor recebido nesta corrida (R$)"}
+function saveGain(){
+ let raw=document.getElementById("gainInput").value;if(raw.trim()==="")return alert("Informe o valor recebido.");
+ let value=num("gainInput"),km=num("kmInput"),previous=state.gross;
+ if(gainMode==="total")state.gross=value;else state.gross+=value;
+ state.km=km;state.rides.push({time:timeNow(),value:gainMode==="total"?value:value,type:gainMode==="total"?"Total atualizado":"Corrida",km:km});
+ document.getElementById("gainInput").value="";persist();render();
 }
-function formatDuration(s) {
-  const h=Math.floor(s/3600),m=Math.floor(s%3600/60),sec=s%60;
-  return [h,m,sec].map(v=>String(v).padStart(2,"0")).join(":");
-}
-function activeHours(){return elapsedSeconds()/3600;}
-function render() {
-  const gross=state.gross||0,km=state.km||0,goal=state.goal||550;
-  const h=activeHours(),exp=state.expenses.reduce((a,e)=>a+e.value,0);
-  document.getElementById("gross").textContent=money(gross);
-  document.getElementById("goalDisplay").textContent=money(goal);
-  document.getElementById("remaining").textContent=gross>=goal?"Meta atingida!":"Faltam "+money(goal-gross);
-  const pct=goal>0?Math.min(100,gross/goal*100):0;
-  document.getElementById("progressText").textContent=pct.toLocaleString("pt-BR",{maximumFractionDigits:1})+"%";
-  document.getElementById("progressBar").style.width=pct+"%";
-  document.getElementById("hourRate").textContent=money(h?gross/h:0);
-  document.getElementById("minuteRate").textContent=money(h?gross/(h*60):0);
-  document.getElementById("kmRate").textContent=money(km?gross/km:0);
-  document.getElementById("distanceDisplay").textContent=km.toLocaleString("pt-BR",{maximumFractionDigits:1})+" km";
-  document.getElementById("timer").textContent=formatDuration(elapsedSeconds());
-  const statuses={running:"● Jornada em andamento",paused:"● Jornada pausada",stopped:"● Não iniciada",finished:"● Jornada encerrada"};
-  document.getElementById("status").textContent=statuses[state.status]||statuses.stopped;
-  document.getElementById("resultGross").textContent=money(gross);
-  document.getElementById("resultExpenses").textContent=money(exp);
-  document.getElementById("resultNet").textContent=money(gross-exp);
-  document.getElementById("expenseList").innerHTML=state.expenses.length
-    ?state.expenses.map((e,i)=>`<div class="btnrow" style="justify-content:space-between;padding:7px 0;border-bottom:1px solid #edf1f7"><span>${escapeHTML(e.type)} · ${money(e.value)}</span><button class="btn red" onclick="removeExpense(${i})">Excluir</button></div>`).join("")
-    :"Nenhuma despesa registrada.";
-  document.getElementById("journeyHistory").innerHTML=state.rides.length
-    ?`<div class="table-wrap"><table><thead><tr><th>Horário</th><th>Valor</th><th>Km</th><th>Tipo</th><th></th></tr></thead><tbody>${state.rides.map((r,i)=>`<tr><td>${escapeHTML(r.time)}</td><td>${money(r.value)}</td><td>${r.km.toLocaleString("pt-BR")}</td><td>${escapeHTML(r.type)}</td><td><button class="btn red" onclick="removeRide(${i})">×</button></td></tr>`).join("")}</tbody></table></div>`
-    :"Nenhum registro nesta jornada.";
-  calculateProjections(false);
-  persist();
-}
-function escapeHTML(s) {
-  return String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
-}
-function startJourney() {
-  if(state.status==="running") return alert("A jornada já está em andamento.");
-  if(state.status==="finished") {
-    if(!confirm("Iniciar uma nova jornada? Os registros atuais serão guardados no histórico.")) return;
-    history.unshift(snapshotDay(state));state=newDay();
-  }
-  state.status="running";state.startedAt=Date.now();
-  persist();render();
-}
-function pauseJourney() {
-  if(state.status!=="running") return alert("A jornada não está em andamento.");
-  state.elapsed=elapsedSeconds();state.startedAt=null;state.status="paused";
-  persist();render();
-}
-function resumeJourney() {
-  if(state.status!=="paused") return alert("A jornada não está pausada.");
-  state.startedAt=Date.now();state.status="running";
-  persist();render();
-}
-function finishJourney() {
-  if(state.status==="finished") return alert("Esta jornada já foi encerrada.");
-  if(!confirm("Deseja encerrar e guardar esta jornada no histórico?")) return;
-  state.elapsed=elapsedSeconds();state.startedAt=null;state.status="finished";
-  history.unshift(snapshotDay(state));history=history.slice(0,90);
-  persist();render();showDayHistory();
-}
-function setGainMode(mode) {
-  gainMode=mode;
-  document.getElementById("modeTotal").classList.toggle("active",mode==="total");
-  document.getElementById("modeRide").classList.toggle("active",mode==="ride");
-  document.getElementById("gainLabel").textContent=mode==="total"?"Ganhos totais do dia até o momento (R$)":"Valor recebido nesta corrida (R$)";
-}
-function saveGain() {
-  const value=num("gainInput"),kmValue=num("kmInput");
-  if(document.getElementById("gainInput").value.trim()==="") return alert("Informe o valor recebido.");
-  if(gainMode==="total") {
-    state.gross=value;
-    state.km=kmValue;
-    state.rides.push({time:timeNow(),value:value,km:kmValue,type:"Total atualizado"});
-  } else {
-    state.gross+=value;
-    state.km=kmValue;
-    state.rides.push({time:timeNow(),value:value,km:kmValue,type:"Corrida"});
-  }
-  document.getElementById("gainInput").value="";
-  persist();render();
-}
-function addExpense() {
-  const value=num("expenseInput"),type=document.getElementById("expenseType").value;
-  if(value<=0) return alert("Informe o valor da despesa.");
-  if(!type) return alert("Selecione o tipo de despesa.");
-  state.expenses.push({value,type,time:timeNow()});
-  document.getElementById("expenseInput").value="";
-  document.getElementById("expenseType").value="";
-  persist();render();
-}
-function removeExpense(i) {
-  if(confirm("Excluir esta despesa?")) {state.expenses.splice(i,1);persist();render();}
-}
-function removeRide(i) {
-  if(!confirm("Excluir este registro? O faturamento não será recalculado automaticamente.")) return;
-  state.rides.splice(i,1);persist();render();
-}
-function saveGoal() {
-  const goal=num("goalInput");
-  if(goal<=0) return alert("Informe uma meta maior que zero.");
-  state.goal=goal;persist();render();
-}
-function useOdometer() {
-  document.getElementById("odometerBox").classList.toggle("hidden");
-}
-function calculateOdometer() {
-  const a=num("odoStart"),b=num("odoEnd");
-  if(b<a) return alert("O hodômetro atual não pode ser menor que o inicial.");
-  document.getElementById("kmInput").value=(b-a).toFixed(1);
-  alert("Distância calculada. Confira o valor e toque em Atualizar ganhos.");
-}
-function gpsNotice() {
-  alert("O GPS real ainda não está ativado nesta versão. Informe os quilômetros manualmente.");
-}
-function calculateProjections(showAlert=true) {
-  const h=activeHours(),gross=state.gross||0,rate=h>0?gross/h:0;
-  [1,2].forEach(i=>{
-    const value=document.getElementById("time"+i).value;
-    if(!value) return;
-    const [hh,mm]=value.split(":").map(Number);
-    const now=new Date();
-    const target=new Date();target.setHours(hh,mm,0,0);
-    const hoursRemaining=Math.max(0,(target-now)/3600000);
-    const estimate=gross+rate*hoursRemaining;
-    document.getElementById("projection"+i).textContent="Estimativa: "+money(estimate);
-  });
-  if(showAlert) alert("Projeções calculadas com base na média atual por hora.");
-}
-function snapshotDay(s) {
-  const elapsed=s===state?elapsedSeconds():(s.elapsed||0);
-  return {
-    day:s.day||today(),gross:s.gross||0,km:s.km||0,
-    expenses:(s.expenses||[]).reduce((a,e)=>a+e.value,0),
-    elapsed:elapsed,rides:(s.rides||[]).length
-  };
-}
-function showDayHistory() {
-  const el=document.getElementById("dayHistory");
-  if(!history.length) {el.textContent="Nenhuma jornada anterior salva.";return;}
-  el.innerHTML=`<div class="table-wrap"><table><thead><tr><th>Data</th><th>Bruto</th><th>Despesas</th><th>Líquido</th><th>Tempo</th></tr></thead><tbody>${history.map(d=>`<tr><td>${escapeHTML(d.day)}</td><td>${money(d.gross)}</td><td>${money(d.expenses)}</td><td>${money(d.gross-d.expenses)}</td><td>${formatDuration(d.elapsed||0)}</td></tr>`).join("")}</tbody></table></div>`;
-}
-function exportBackup() {
-  const data=JSON.stringify({state,history},null,2);
-  const blob=new Blob([data],{type:"application/json"});
-  const url=URL.createObjectURL(blob),a=document.createElement("a");
-  a.href=url;a.download="rendi-mais-backup-"+today()+".json";a.click();
-  URL.revokeObjectURL(url);
-}
-function importBackup(event) {
-  const file=event.target.files[0];if(!file)return;
-  const reader=new FileReader();
-  reader.onload=()=>{
-    try {
-      const data=JSON.parse(reader.result);
-      if(!data.state||!Array.isArray(data.history)) throw new Error();
-      if(!confirm("Importar backup? Os dados atuais serão substituídos.")) return;
-      state=data.state;history=data.history;
-      if(state.status==="running"){state.status="paused";state.startedAt=null;}
-      persist();render();showDayHistory();alert("Backup importado.");
-    } catch(e) {alert("Arquivo inválido ou incompatível.");}
-    event.target.value="";
-  };
-  reader.readAsText(file);
-}
-function scrollToSection(id) {
-  document.getElementById(id).scrollIntoView({behavior:"smooth"});
-}
-loadData();
-setInterval(()=>{
-  if(state.status==="running") {
-    document.getElementById("timer").textContent=formatDuration(elapsedSeconds());
-    document.getElementById("hourRate").textContent=money(activeHours()?state.gross/activeHours():0);
-    document.getElementById("minuteRate").textContent=money(activeHours()?state.gross/(activeHours()*60):0);
-  }
-},1000);
-</script>
-</body>
-</html>
+function addExpense(){let value=num("expenseInput"),type=document.getElementById("expenseType").value;if(value<=0)return alert("Informe o valor da despesa.");if(!type)return alert("Selecione o tipo de despesa.");state.expenses.push({value,type,time:timeNow()});document.getElementById("expenseInput").value="";document.getElementById("expenseType").value="";persist();render()}
+function removeExpense(i){if(confirm("Excluir esta despesa?")){state.expenses.splice(i,1);persist();render()}}
+function removeRide(i){if(!confirm("Excluir este registro do histórico da jornada?"))return;let r=state.rides[i];if(r&&r.type==="Corrida")state.gross=Math.max(0,state.gross-r.value);state.rides.splice(i,1);persist();render()}
+function saveGoal(){let goal=num("goalInput");if(goal<=0)return alert("Informe uma meta maior que zero.");state.goal=goal;persist();render()}
+function useOdometer(){document.getElementById("odometerBox").classList.toggle("hidden")}
+function calculateOdometer(){let a=num("odoStart"),b=num("odoEnd");if(b<a)return alert("O hodômetro atual não pode ser menor que o inicial.");document.getElementById("kmInput").value=(b-a).toFix
