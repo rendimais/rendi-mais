@@ -1,0 +1,115 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#123b70">
+<title>RENDI+</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#eef3f9;color:#18304d;font-family:Arial,sans-serif}
+header{background:#123b70;color:white;padding:22px 18px;border-radius:0 0 22px 22px}
+h1{margin:0;font-size:28px}header p{margin:6px 0 0}
+main{padding:16px;max-width:600px;margin:auto}
+.card{background:white;border-radius:16px;padding:18px;margin-bottom:14px;box-shadow:0 3px 12px #102c5010}
+.label{font-size:13px;color:#64748b}
+.value{font-size:32px;font-weight:bold;margin:8px 0}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.metric{background:#f1f6fc;padding:12px;border-radius:12px}
+.metric strong{display:block;font-size:21px;margin-top:7px}
+button,input{font:inherit;padding:12px;border-radius:10px;border:1px solid #cbd5e1}
+button{background:#1765b1;color:white;border:0;font-weight:bold;cursor:pointer}
+input{width:100%;margin:7px 0 12px}
+.actions{display:flex;gap:8px;flex-wrap:wrap}
+h2{font-size:18px;margin-top:0}
+li{padding:8px 0;border-bottom:1px solid #e5eaf1}
+</style>
+</head>
+<body>
+<header>
+<h1>RENDI+</h1>
+<p>Seus ganhos, sob controle.</p>
+</header>
+<main>
+<section class="card">
+<div class="label">Faturamento da jornada</div>
+<div class="value" id="total">R$ 0,00</div>
+<div class="grid">
+<div class="metric"><span class="label">Por hora</span><strong id="hora">R$ 0,00</strong></div>
+<div class="metric"><span class="label">Por minuto</span><strong id="minuto">R$ 0,00</strong></div>
+<div class="metric"><span class="label">Por km</span><strong id="kmvalor">R$ 0,00</strong></div>
+<div class="metric"><span class="label">Distância</span><strong id="distancia">0 km</strong></div>
+</div>
+</section>
+<section class="card">
+<h2>Jornada de trabalho</h2>
+<div id="status">Jornada não iniciada</div>
+<div class="actions" style="margin-top:12px">
+<button onclick="iniciar()">Iniciar</button>
+<button onclick="pausar()">Pausar</button>
+<button onclick="retomar()">Retomar</button>
+<button onclick="encerrar()">Encerrar</button>
+</div>
+</section>
+<section class="card">
+<h2>Registrar corrida</h2>
+<label class="label" for="ganho">Valor recebido (R$)</label>
+<input id="ganho" type="number" min="0" step="0.01" placeholder="Ex.: 25,50">
+<label class="label" for="kmcorrida">Quilômetros percorridos</label>
+<input id="kmcorrida" type="number" min="0" step="0.1" placeholder="Ex.: 12">
+<button onclick="registrar()">Adicionar corrida</button>
+</section>
+<section class="card">
+<h2>Histórico desta jornada</h2>
+<ul id="historico" style="padding-left:18px"></ul>
+</section>
+<section class="card">
+<h2>Meta diária</h2>
+<label class="label" for="meta">Sua meta em reais</label>
+<input id="meta" type="number" min="0" step="1" value="550">
+<div id="progresso">Faltam R$ 550,00</div>
+</section>
+</main>
+<script>
+let total=0,km=0,segundos=0,inicio=null,ativo=false,pausado=false,intervalo=null;
+let corridas=[];
+const moeda=n=>n.toLocaleString('pt-BR',{style:'currency',currency:'BRL'});
+function atualizar(){
+document.getElementById('total').textContent=moeda(total);
+document.getElementById('distancia').textContent=km.toFixed(1)+' km';
+document.getElementById('hora').textContent=moeda(segundos?total/(segundos/3600):0);
+document.getElementById('minuto').textContent=moeda(segundos?total/(segundos/60):0);
+document.getElementById('kmvalor').textContent=moeda(km?total/km:0);
+let meta=Math.max(0,Number(document.getElementById('meta').value)||0);
+document.getElementById('progresso').textContent='Faltam '+moeda(Math.max(0,meta-total))+' para a meta';
+}
+function iniciar(){
+if(ativo)return;
+ativo=true;pausado=false;inicio=Date.now();
+document.getElementById('status').textContent='Jornada em andamento';
+intervalo=setInterval(()=>{if(ativo&&!pausado){segundos++;atualizar()}},1000);
+}
+function pausar(){if(!ativo)return;pausado=true;document.getElementById('status').textContent='Jornada pausada';}
+function retomar(){if(!ativo)return;pausado=false;document.getElementById('status').textContent='Jornada em andamento';}
+function registrar(){
+let g=Number(document.getElementById('ganho').value);
+let d=Number(document.getElementById('kmcorrida').value);
+if(!Number.isFinite(g)||g<=0||!Number.isFinite(d)||d<0){alert('Informe o ganho e os quilômetros corretamente.');return}
+total+=g;km+=d;corridas.push({g,d});
+let li=document.createElement('li');li.textContent=moeda(g)+' — '+d.toFixed(1)+' km';
+document.getElementById('historico').prepend(li);
+document.getElementById('ganho').value='';document.getElementById('kmcorrida').value='';
+atualizar();
+}
+function encerrar(){
+if(!ativo){alert('Inicie a jornada primeiro.');return}
+ativo=false;pausado=false;clearInterval(intervalo);
+document.getElementById('status').textContent='Jornada encerrada';
+atualizar();
+}
+document.getElementById('meta').addEventListener('input',atualizar);
+atualizar();
+</script>
+</body>
+</html>
