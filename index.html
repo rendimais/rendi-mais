@@ -1,0 +1,131 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#123b70">
+<title>RENDI+</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#edf3fa;color:#18304d;font-family:Arial,sans-serif}
+header{background:#123b70;color:white;padding:22px 18px;border-radius:0 0 22px 22px}
+h1{margin:0;font-size:28px}
+header p{margin:6px 0 0}
+main{padding:15px;max-width:600px;margin:auto}
+.card{background:white;border-radius:16px;padding:17px;margin-bottom:14px;box-shadow:0 3px 12px #102c5010}
+.label{font-size:13px;color:#64748b}
+.value{font-size:32px;font-weight:bold;margin:8px 0}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.metric{background:#f1f6fc;padding:12px;border-radius:12px}
+.metric strong{display:block;font-size:20px;margin-top:7px}
+button,input{font:inherit;padding:12px;border-radius:10px;border:1px solid #cbd5e1}
+button{background:#1765b1;color:white;border:0;font-weight:bold;cursor:pointer}
+button.secondary{background:#e5edf7;color:#18304d}
+input{width:100%;margin:7px 0 12px}
+.actions{display:flex;gap:8px;flex-wrap:wrap}
+h2{font-size:18px;margin-top:0}
+li{padding:8px 0;border-bottom:1px solid #e5eaf1}
+.progress{height:12px;background:#e5eaf1;border-radius:10px;overflow:hidden;margin:12px 0}
+#barra{height:100%;width:0;background:#20a36b}
+.small{font-size:13px;color:#64748b}
+</style>
+</head>
+<body>
+<header>
+<h1>RENDI+</h1>
+<p>Seus ganhos, sob controle.</p>
+</header>
+<main>
+<section class="card">
+<div class="label">Faturamento da jornada</div>
+<div class="value" id="total">R$ 0,00</div>
+<div class="grid">
+<div class="metric"><span class="label">Por hora</span><strong id="hora">R$ 0,00</strong></div>
+<div class="metric"><span class="label">Por minuto</span><strong id="minuto">R$ 0,00</strong></div>
+<div class="metric"><span class="label">Por km</span><strong id="kmvalor">R$ 0,00</strong></div>
+<div class="metric"><span class="label">Distância</span><strong id="distancia">0 km</strong></div>
+</div>
+</section>
+<section class="card">
+<h2>Jornada</h2>
+<div id="status">Não iniciada</div>
+<p class="small" id="tempo">Tempo trabalhado: 00:00:00</p>
+<div class="actions">
+<button onclick="iniciar()">Iniciar</button>
+<button class="secondary" onclick="pausar()">Pausar</button>
+<button class="secondary" onclick="retomar()">Retomar</button>
+<button class="secondary" onclick="encerrar()">Encerrar</button>
+</div>
+</section>
+<section class="card">
+<h2>Registrar corrida</h2>
+<label class="label" for="ganho">Valor recebido (R$)</label>
+<input id="ganho" type="number" min="0" step="0.01" placeholder="Ex.: 25,50">
+<label class="label" for="kmcorrida">Distância da corrida (km)</label>
+<input id="kmcorrida" type="number" min="0" step="0.1" placeholder="Ex.: 12">
+<button onclick="registrar()">Adicionar corrida</button>
+</section>
+<section class="card">
+<h2>Meta diária</h2>
+<label class="label" for="meta">Meta de faturamento (R$)</label>
+<input id="meta" type="number" min="0" value="550">
+<div class="progress"><div id="barra"></div></div>
+<div id="progresso">Faltam R$ 550,00</div>
+</section>
+<section class="card">
+<h2>Despesas</h2>
+<label class="label" for="despesa">Valor da despesa (R$)</label>
+<input id="despesa" type="number" min="0" step="0.01" placeholder="Ex.: 15,00">
+<label class="label" for="descricao">Descrição</label>
+<input id="descricao" type="text" placeholder="Ex.: recarga, café">
+<button onclick="registrarDespesa()">Adicionar despesa</button>
+<p>Despesas: <strong id="totalDespesas">R$ 0,00</strong></p>
+<p>Resultado após despesas: <strong id="liquido">R$ 0,00</strong></p>
+</section>
+<section class="card">
+<h2>Histórico da jornada</h2>
+<ul id="historico"></ul>
+<button class="secondary" onclick="limpar()">Limpar jornada</button>
+</section>
+<p class="small">Versão inicial de teste. Os dados ficam nesta página e ainda não têm cópia de segurança.</p>
+</main>
+<script>
+let total=0,km=0,despesas=0,segundos=0,estado="parada",marco=null,intervalo=null;
+const moeda=n=>n.toLocaleString("pt-BR",{style:"currency",currency:"BRL"});
+function atualizar(){
+document.getElementById("total").textContent=moeda(total);
+document.getElementById("distancia").textContent=km.toFixed(1)+" km";
+document.getElementById("hora").textContent=moeda(segundos?total/(segundos/3600):0);
+document.getElementById("minuto").textContent=moeda(segundos?total/(segundos/60):0);
+document.getElementById("kmvalor").textContent=moeda(km?total/km:0);
+document.getElementById("totalDespesas").textContent=moeda(despesas);
+document.getElementById("liquido").textContent=moeda(total-despesas);
+let meta=Math.max(0,Number(document.getElementById("meta").value)||0);
+let pct=meta?Math.min(100,total/meta*100):0;
+document.getElementById("barra").style.width=pct+"%";
+document.getElementById("progresso").textContent=meta?"Faltam "+moeda(Math.max(0,meta-total))+" para a meta ("+pct.toFixed(0)+"%)":"Defina uma meta";
+let h=Math.floor(segundos/3600),m=Math.floor(segundos%3600/60),s=segundos%60;
+document.getElementById("tempo").textContent="Tempo trabalhado: "+String(h).padStart(2,"0")+":"+String(m).padStart(2,"0")+":"+String(s).padStart(2,"0");
+}
+function iniciar(){if(estado==="rodando")return;estado="rodando";document.getElementById("status").textContent="Em andamento";if(!intervalo)intervalo=setInterval(()=>{if(estado==="rodando"){segundos++;atualizar()}},1000);atualizar()}
+function pausar(){if(estado!=="rodando")return;estado="pausada";document.getElementById("status").textContent="Pausada"}
+function retomar(){if(estado!=="pausada")return;estado="rodando";document.getElementById("status").textContent="Em andamento"}
+function encerrar(){estado="encerrada";document.getElementById("status").textContent="Encerrada";clearInterval(intervalo);intervalo=null}
+function registrar(){
+let g=Number(document.getElementById("ganho").value),d=Number(document.getElementById("kmcorrida").value);
+if(!Number.isFinite(g)||g<=0||!Number.isFinite(d)||d<0){alert("Informe o valor recebido e a distância.");return}
+total+=g;km+=d;adicionarLinha(moeda(g)+" — "+d.toFixed(1)+" km");document.getElementById("ganho").value="";document.getElementById("kmcorrida").value="";atualizar()
+}
+function registrarDespesa(){
+let v=Number(document.getElementById("despesa").value),desc=document.getElementById("descricao").value.trim()||"Despesa";
+if(!Number.isFinite(v)||v<=0){alert("Informe o valor da despesa.");return}
+despesas+=v;adicionarLinha("Despesa: "+desc+" — "+moeda(v));document.getElementById("despesa").value="";document.getElementById("descricao").value="";atualizar()
+}
+function adicionarLinha(txt){let li=document.createElement("li");li.textContent=txt;document.getElementById("historico").prepend(li)}
+function limpar(){if(!confirm("Apagar os registros desta jornada?"))return;encerrar();total=0;km=0;despesas=0;segundos=0;estado="parada";document.getElementById("status").textContent="Não iniciada";document.getElementById("historico").innerHTML="";atualizar()}
+document.getElementById("meta").addEventListener("input",atualizar);
+atualizar();
+</script>
+</body>
+</html>
